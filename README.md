@@ -1,5 +1,10 @@
 # MultiTenant SaaS Platform
 
+[![GitHub stars](https://img.shields.io/github/stars/Kemboi14/multitenant-k8s.svg?style=social&label=Star)](https://github.com/Kemboi14/multitenant-k8s)
+[![GitHub forks](https://img.shields.io/github/forks/Kemboi14/multitenant-k8s.svg?style=social&label=Fork)](https://github.com/Kemboi14/multitenant-k8s/fork)
+[![GitHub issues](https://img.shields.io/github/issues/Kemboi14/multitenant-k8s.svg)](https://github.com/Kemboi14/multitenant-k8s/issues)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A **cloud-native multi-tenant SaaS platform** demonstrating **Podman containers, Kubernetes orchestration, and Terraform-based infrastructure** with a secure, scalable, real-world architecture.
 
 ## 🎯 Project Overview
@@ -38,6 +43,12 @@ MultiTenant is a complete, production-ready SaaS platform that showcases:
 
 ## 🚀 Quick Start
 
+### 🌟 Try it Now with GitHub Codespaces
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Kemboi14/multitenant-k8s)
+
+Click the button above to open this project in GitHub Codespaces with all dependencies pre-installed.
+
 ### Prerequisites
 
 Install the following tools:
@@ -66,8 +77,8 @@ sudo apt-get install -y nodejs
 
 ```bash
 # Clone and deploy
-git clone <repository-url>
-cd multitenant
+git clone https://github.com/Kemboi14/multitenant-k8s.git
+cd multitenant-k8s
 ./scripts/build.sh full
 ```
 
