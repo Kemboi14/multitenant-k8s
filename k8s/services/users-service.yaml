@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: users-secret
+  namespace: multitenant-users
+type: Opaque
+data:
+  JWT_SECRET_KEY: eW91ci1zZWNyZXQta2V5LWNoYW5nZS1pbi1wcm9kdWN0aW9u  # your-secret-key-change-in-production
+  DATABASE_URL: cG9zdGdyZXNxbDovL3Bvc3RncmVzOnBhc3N3b3JkQHBvc3RncmVzLXNlcnZpY2UubXVsdGl0ZW5hbnQuc3ZjLmNsdXN0ZXIubG9jYWw6NTQzMi9tdWx0aXRlbmFudA==  # postgresql://postgres:password@postgres-service.multitenant.svc.cluster.local:5432/multitenant
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-service
+  namespace: multitenant-users
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: users-service
+  template:
+    metadata:
+      labels:
+        app: users-service
+    spec:
+      containers:
+      - name: users-service
+        image: multitenant/users-service:latest
+        ports:
+        - containerPort: 8002
+        env:
+        - name: JWT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: users-secret
+              key: JWT_SECRET_KEY
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: users-secret
+              key: DATABASE_URL
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8002
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8002
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-service
+  namespace: multitenant-users
+spec:
+  selector:
+    app: users-service
+  ports:
+  - port: 8002
+    targetPort: 8002
+  type: ClusterIP

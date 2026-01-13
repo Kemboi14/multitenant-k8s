@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: multitenant
+  labels:
+    name: multitenant
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: multitenant-auth
+  labels:
+    name: multitenant-auth
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: multitenant-users
+  labels:
+    name: multitenant-users
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: multitenant-frontend
+  labels:
+    name: multitenant-frontend
